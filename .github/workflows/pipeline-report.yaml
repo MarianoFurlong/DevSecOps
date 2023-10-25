@@ -26,7 +26,7 @@ jobs:
             --failOnCVSS 7
             --enableRetired
       - name: Upload Test results
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@main
         with:
            name: Depcheck report
-           path: ${{github.workspace}}/reports
+           path: $MarianoFurlong/DevSecOps/reports
