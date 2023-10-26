@@ -57,3 +57,17 @@ jobs:
 
       - name: "Revision del reporte"
         run: ls -ltra ${{github.workspace}}/reports
+
+  horusec-security:
+    name: horusec-security
+    runs-on: ubuntu-latest
+    steps:
+    - name: Revisar código
+      uses: actions/checkout@v3
+    - name: Running Horusec Security
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
+        horusec start -p="./" -e="false"
+    - name: "Docker-image"
+      run: |
+        docker build -t michis ../../../../
