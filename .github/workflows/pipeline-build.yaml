@@ -76,7 +76,6 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-    - name: "Docker-image"
-      ports: 80:80
+    - name: Docker-image
       run: |
         sudo docker build -t michis ../../../../
