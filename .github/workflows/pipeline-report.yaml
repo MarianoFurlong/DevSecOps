@@ -6,27 +6,37 @@ on:
       - main
 
 jobs:
-  depchecktest:
+  horusec-security:
+    name: horusec-security
     runs-on: ubuntu-latest
-    name: depecheck_test
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build project with Maven
-        run: mvn clean install
-      - name: Depcheck
-        uses: dependency-check/Dependency-Check_Action@main
-        id: Depcheck
+      - name: "Obteniendo ultima version del codigo"
+        uses: actions/checkout@v3
+
+      - name: "Instalacion Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: "Compilacion"
+        run: ./mvnw clean install
+
+      - name: "Verificar paquete"
+        run: ls -ltra target
+
+      - name: horusec
+        run: horusec-security clean install
+      - name: horusec
+        uses: horusec-security/Horusec-Security_Action@main
+        id: horusec
         with:
           project: 'test'
           path: '.'
           format: 'HTML'
           out: 'reports' # this is the default, no need to specify unless you wish to override it
-          args: >
-            --failOnCVSS 7
-            --enableRetired
+
       - name: Upload Test results
         uses: actions/upload-artifact@main
         with:
-           name: Depcheck report
-           path: $MarianoFurlong/DevSecOps/reports
+           name: Horusec report
+           path: ${{github.workspace}}/reports
