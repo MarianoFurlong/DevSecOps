@@ -68,7 +68,7 @@ jobs:
       run: |
         curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
         horusec start -p="./" -e="false"
-  Docker:
+
   - name: Build and push Docker image
     uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
     with:
