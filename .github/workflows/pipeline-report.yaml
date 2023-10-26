@@ -1,42 +1,18 @@
-name: GOAT report
-
+name: GoatHoursec
+ 
 on:
   push:
     branches:
       - main
-
+ 
 jobs:
   horusec-security:
     name: horusec-security
     runs-on: ubuntu-latest
     steps:
-      - name: "Obteniendo ultima version del codigo"
-        uses: actions/checkout@v3
-
-      - name: "Instalacion Java"
-        uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - name: "Compilacion"
-        run: ./mvnw clean install
-
-      - name: "Verificar paquete"
-        run: ls -ltra target
-
-      - name: horusec
-        run: horusec-security clean install
-      - name: horusec
-        uses: horusec-security/Horusec-Security_Action@main
-        id: horusec
-        with:
-          project: 'test'
-          path: '.'
-          format: 'HTML'
-          out: 'reports' # this is the default, no need to specify unless you wish to override it
-
-      - name: Upload Test results
-        uses: actions/upload-artifact@main
-        with:
-           name: Horusec report
-           path: ${{github.workspace}}/reports
+    - name: Revisar código
+      uses: actions/checkout@v3
+    - name: Running Horusec Security
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
+        horusec start -p="./" -e="false"
