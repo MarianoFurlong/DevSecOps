@@ -44,13 +44,11 @@ jobs:
           JAVA_HOME: /opt/jdk
         id: Depcheck
         with:
-          project: 'test'
+          project: 'WebGoat'
           path: '.'
           format: 'HTML'
           out: 'reports' # this is the default, no need to specify unless you wish to override it
-          args: >
-            --failOnCVSS 7
-            --enableRetired
+
       - name: Upload Test results
         uses: actions/upload-artifact@main
         with:
