@@ -62,10 +62,15 @@ jobs:
           docker build -f Dockerfile . -t webgoat/test
           docker images
       - name: "Evaluar imagen"
-        run: |
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
-          sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
-          trivy image webgoat/test
+        runs-on: ubuntu-latest
+        steps:
+        - name: Pull docker image
+          run: docker pull webgoat/test
+
+        - uses: lazy-actions/gitrivy@v3
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            image: webgoat/test
 
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
