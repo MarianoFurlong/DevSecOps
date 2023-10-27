@@ -64,11 +64,14 @@ jobs:
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
       - name: "Iniciar el contenedor"
-        run: docker run -d -p 8080:80 --name michiote webgoat/test
+        run: docker run -d -p 8080:8080 --name michiote webgoat/test
       - name: "Listar"
         run: docker ps -a      
       - name: "Iniciar"
-        run: docker container start michiote
+        run: |
+          curl http://127.0.0.1:8080/WebGoat/login
+          docker container stop michiote
+          docker container rm michiote
 
 
   horusec-security:
