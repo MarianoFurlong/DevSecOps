@@ -62,7 +62,7 @@ jobs:
           docker build -f Dockerfile . -t webgoat/test
           docker images
       - name: "Correrse en el contenedor"
-        run: docker run -d 6d6c95740e6d 
+        run: docker run -d webgoat/test
 
 
   horusec-security:
