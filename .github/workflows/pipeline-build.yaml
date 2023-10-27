@@ -66,8 +66,11 @@ jobs:
         with:
           image-ref: 'webgoat/test'
           format: 'table'
-          ignore-unifixed: true
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+          SCANNERS: vuln,secret,config
           timeout: 20m
+        continue-on-error: true
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
