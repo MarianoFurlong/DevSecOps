@@ -73,11 +73,6 @@ jobs:
         run: docker run -d -p 8080:8080 --name michiote webgoat/test
       - name: "Listar"
         run: docker ps -a      
-      - name: "Iniciar"
-        run: |
-          curl http://127.0.0.1:8080/WebGoat/login
-          docker container stop michiote
-          docker container rm michiote
 
 
   horusec-security:
