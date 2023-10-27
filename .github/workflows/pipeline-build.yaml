@@ -62,11 +62,11 @@ jobs:
           docker build -f Dockerfile . -t webgoat/test
           docker images
       - name: Run Trivy vulnerability scanner in fs mode
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        trivy-config: trivy.yaml
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          trivy-config: trivy.yaml
 
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
