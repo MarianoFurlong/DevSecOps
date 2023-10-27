@@ -64,7 +64,7 @@ jobs:
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
       - name: "Iniciar el contenedor"
-        run: docker run -d -p 8080:80 --name michiote
+        run: docker run -d -p 8080:80 --name michiote webgoat/test
       - name: "Listar"
         run: docker ps -a      
       - name: "Iniciar"
