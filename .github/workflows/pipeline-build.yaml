@@ -58,7 +58,10 @@ jobs:
       - name: "Revision del reporte"
         run: ls -ltra ${{github.workspace}}/reports
       - name: "Imagen Docker"
-        run: "docker build -t prueba:latest ./"
+        run: |
+          docker build -f Dockerfile . -t webgoat/test
+          docker images
+
 
   horusec-security:
     name: horusec-security
