@@ -63,6 +63,9 @@ jobs:
           docker images
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
+      - name: "Iniciar el contenedor"
+        run: docker container start webgoat/test
+      
 
 
   horusec-security:
