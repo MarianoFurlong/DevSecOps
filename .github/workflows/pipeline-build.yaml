@@ -61,16 +61,12 @@ jobs:
         run: |
           docker build -f Dockerfile . -t webgoat/test
           docker images
-        name: "Evaluar imagen"
-        runs-on: ubuntu-latest
-        steps:
-        - name: Pull docker image
-          run: docker pull webgoat/test
-
-        - uses: lazy-actions/gitrivy@v3
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            image: webgoat/test
+      - name: Run Trivy vulnerability scanner in fs mode
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        trivy-config: trivy.yaml
 
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
