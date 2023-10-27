@@ -65,7 +65,7 @@ jobs:
         run: |
           wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
           sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
-          trivy image php:8.0-apache
+          trivy image webgoat/test
 
       - name: "Correrse en el contenedor"
         run: docker run -d webgoat/test
