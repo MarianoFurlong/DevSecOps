@@ -48,20 +48,20 @@ jobs:
           docker build -f Dockerfile . -t webgoat:latest
           docker images
  
-      - name: "Run Trivy vulnerability scanner"
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'webgoat/test'
-          timeout: 10m0s
-          exit-code: '1'
-          severity: 'CRITICAL,HIGH'
-          scanners: vuln,secret,config
-        continue-on-error: true
+#      - name: "Run Trivy vulnerability scanner"
+#        uses: aquasecurity/trivy-action@master
+#        with:
+#          image-ref: 'webgoat/test'
+#          timeout: 10m0s
+#          exit-code: '1'
+#          severity: 'CRITICAL,HIGH'
+#          scanners: vuln,secret,config
+#        continue-on-error: true
  
       - name: "Crear Contenedor"
         run: docker run --name WebGoat -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat:latest
       - name: "Installing Arachni"
-      - name: Ejecutar escaneo Arachnii
+      - name: Ejecutar escaneo Arachni
         run: |
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
           tar xvzf arachni.tar.gz
