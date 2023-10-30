@@ -72,3 +72,6 @@ jobs:
         run: ./arachni-1.6.1.3-0.6.1.1/bin/arachni --check=* http://$var_IP:8080/WebGoat/login
  
       - name: "Crear Contenedor"
+        run: |
+          docker container stop webgoat
+          docker container rm webgoat
