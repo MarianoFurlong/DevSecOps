@@ -1,0 +1,78 @@
+name: GOAT Compile
+on:
+  push:
+    branches:
+      - main
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: "Obteniendo ultima version del codigo"
+        uses: actions/checkout@v3
+      - name: "Instalacion Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: "Compilacion"
+        run: ./mvnw clean install
+      - name: "Verificar paquete"
+        run: ls -ltra target
+  
+      - name: "Imagen Docker"
+        run: "docker build -t prueba:latest ./"
+
+      - name: "Muestra imagenes de docker"
+        run: docker images
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }} 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1 
+
+      - name: Build, tag, and push image to Amazon ECR 
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: "mariano"
+          IMAGE_TAG: v1
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      
+      - name: "Imagen AWS"
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m0u9d4i7
+          docker build -t mariano .
+          docker tag mariano:latest public.ecr.aws/m0u9d4i7/mariano:latest
+          docker push public.ecr.aws/m0u9d4i7/mariano:latest
+      - name: "Inicia container "
+        run: docker run -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 --name WebGoat
+ 
+      - name: Ejecutar escaneo Arachnii
+        run: |
+          wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
+          tar xvzf arachni.tar.gz
+          cd arachni-1.5.1-0.5.12/
+          var_IP=$(docker inspect WebGoat | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
+          ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
+      - name: "Corre container"
+        run: docker start WebGoat
+ 
+      - name: "Muestra contenedores"
+        run: docker ps -a
+
+      - name: "Matar Contenedor"
+        run: |
+          docker container stop WebGoat
+          docker container rm WebGoat
+ 
