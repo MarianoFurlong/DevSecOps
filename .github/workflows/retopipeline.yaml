@@ -43,10 +43,10 @@ jobs:
           docker push public.ecr.aws/m0u9d4i7/mariano:latest
       - name: "Terraform"
         run: |
-          terraform -chdir=/home/kali/terraform init
-          terraform -chdir=/home/kali/terraform verify
-          terraform -chdir=/home/kali/terraform apply
-          terraform -chdir=/home/kali/terraform plan
+          terraform -chdir=./terraform init
+          terraform -chdir=./terraform verify
+          terraform -chdir=./terraform plan -out plan
+          terraform -chdir=./terraform apply plan
       - name: Ejecutar escaneo Arachnii
         run: |
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
