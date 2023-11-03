@@ -41,9 +41,12 @@ jobs:
           docker build -t mariano .
           docker tag mariano:latest public.ecr.aws/m0u9d4i7/mariano:latest
           docker push public.ecr.aws/m0u9d4i7/mariano:latest
-      - name: "Inicia container "
-        run: docker run -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 --name WebGoat
- 
+      - name: "Terraform"
+        run: |
+          terraform -chdir=/home/kali/terraform init
+          terraform -chdir=/home/kali/terraform verify
+          terraform -chdir=/home/kali/terraform apply
+          terraform -chdir=/home/kali/terraform plan
       - name: Ejecutar escaneo Arachnii
         run: |
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
