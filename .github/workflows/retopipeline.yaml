@@ -43,11 +43,11 @@ jobs:
           docker push public.ecr.aws/m0u9d4i7/mariano:latest
       - name: "Terraform"
         run: |
-          terraform -chdir=./terraform init
-          terraform -chdir=./terraform verify
-          terraform -chdir=./terraform plan -out plan
-          terraform -chdir=./terraform apply plan
-          terraform -chdir=./terraform destroy
+          terraform -chdir=./terraform/ init
+          terraform -chdir=./terraform/ verify
+          terraform -chdir=./terraform/ plan -out plan
+          terraform -chdir=./terraform/ apply plan
+          terraform -chdir=./terraform/ destroy
 
       - name: Ejecutar escaneo Arachnii
         run: |
