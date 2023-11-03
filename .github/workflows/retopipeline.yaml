@@ -68,7 +68,7 @@ jobs:
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
           tar xvzf arachni.tar.gz
           cd arachni-1.5.1-0.5.12/
-          ip_webgoat=$(cat results_tfplan.txt | grep "My_ip = "| awk '{ print $3 }' | sed 's/*//g')
+          ip_webgoat=$( terraform -chdir=Terraform/ output | grep "My_ip = "| awk '{ print $3 }' | sed 's/*//g')
           ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
       
       - name: "Matar Contenedor"
