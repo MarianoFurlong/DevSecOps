@@ -52,12 +52,12 @@ jobs:
 
       - name: "Ansible"
         env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ secrets.ANSIBLE_KEY }}
         run: |
           sudo apt update
           sudo apt install -y ansible
           cd Ansible
-          echo "$PRIVATE_KEY" >> $HOME/key.pem
+          echo "$ANSIBLE_KEY" >> $HOME/key.pem
           sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
           ansible-playbook -i inventario server.yaml --become --private-key $HOME/key.pem
