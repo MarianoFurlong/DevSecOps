@@ -48,7 +48,7 @@ jobs:
           terraform -chdir=./Terraform/ plan -out plan
           terraform -chdir=./Terraform/ apply plan
           terraform -chdir=./Terraform/ destroy
-
+ 
 
       - name: Ejecutar escaneo Arachnii
         run: |
