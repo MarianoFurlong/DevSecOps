@@ -47,8 +47,13 @@ jobs:
           terraform -chdir=./Terraform/ validate
           terraform -chdir=./Terraform/ plan -out plan
           terraform -chdir=./Terraform/ apply plan
-          terraform -chdir=./Terraform/ destroy
- 
+
+      - name: "Ansible"
+        run: |
+          cd Ansible
+          var_IP=$(docker inspect WebGoat | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
+          ansible-playbook -i inventario server.yaml --become
+
 
       - name: Ejecutar escaneo Arachnii
         run: |
