@@ -1,4 +1,4 @@
-name: Michis
+name: GOAT Compile
  
 on:
   push:
@@ -83,7 +83,7 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
           category: 'code'
-              
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
