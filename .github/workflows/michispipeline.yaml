@@ -92,9 +92,10 @@ jobs:
         uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{matrix.language}}"
-
+#fcfc
 
       - name: "Matar Contenedor"
         run: |
           docker container stop WebGoat
           docker container rm WebGoat
+          
