@@ -22,6 +22,15 @@ jobs:
         run: ./mvnw clean install
       - name: "Verificar paquete"
         run: ls -ltra target
+      - name: Test with Checkov
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: Terraform
+          framework: terraform
+          output_format: sarif
+          output_file_path: reports/reportes.sarif
+        continue-on-error: true
   
       - name: "Imagen Docker"
         run: "docker build -t prueba:latest ./"
@@ -46,11 +55,13 @@ jobs:
           cd Terraform
           terraform init
           terraform plan -out tfplan
+          terraform show -json tfplan | jq > tfplan.json
+          checkov -f tfplan.json
           terraform apply tfplan >> result_tfplan.txt
           ip_webgoat=$(cat result_tfplan.txt | grep "My_ip = "| awk '{ print $3 }' | sed 's/*//g')
           sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario
-          terraform show -json tfplan | jq > tfplan.json
-          checkov -f tfplan.json
+        continue-on-error: true  
+          
 
       - name: "Ansible"
         env:
