@@ -27,7 +27,7 @@ jobs:
         run: ./mvnw clean install
       - name: "Verificar paquete"
         run: ls -ltra target
-        
+
       - name: Test with Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
@@ -88,10 +88,10 @@ jobs:
           var_IP=$(docker inspect prueba | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
           ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
       
-      - name: "Matar Contenedor"
-        run: |
-          cd Terraform
-          terraform plan -destroy -out tfplan
-          terraform apply tfplan
+#      - name: "Matar Contenedor"
+#        run: |
+#          cd Terraform
+#          terraform plan -destroy -out tfplan
+#          terraform apply tfplan
 
  
