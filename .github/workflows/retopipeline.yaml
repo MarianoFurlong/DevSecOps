@@ -34,8 +34,8 @@ jobs:
         with:
           directory: Terraform
           framework: terraform
-          output_format: sarif
-          output_file_path: reports/reportes.sarif
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
         continue-on-error: true
   
       - name: "Imagen Docker"
@@ -88,10 +88,10 @@ jobs:
           var_IP=$(docker inspect prueba | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
           ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
       
-#      - name: "Matar Contenedor"
-#        run: |
-#          cd Terraform
-#          terraform plan -destroy -out tfplan
-#          terraform apply tfplan
+      - name: "Matar Contenedor"
+        run: |
+          cd Terraform
+          terraform plan -destroy -out tfplan
+          terraform apply tfplan
 
  

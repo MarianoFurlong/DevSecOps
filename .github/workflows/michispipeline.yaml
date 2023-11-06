@@ -60,7 +60,6 @@ jobs:
  
       - name: "Crear Contenedor"
         run: docker run --name WebGoat -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat:latest
-      - name: "Installing Arachni"
       - name: Ejecutar escaneo Arachni
         run: |
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
