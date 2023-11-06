@@ -65,9 +65,9 @@ jobs:
           wget -O arachni.tar.gz https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
           tar xvzf arachni.tar.gz
           cd arachni-1.5.1-0.5.12/
-          var_IP=$(docker inspect webgoat | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
+          var_IP=$(docker inspect WebGoat | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
           ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
- 
+          
       - name: "Crear Contenedor"
         run: |
           docker container stop WebGoat
