@@ -39,6 +39,12 @@ jobs:
           path: '.'
           format: 'SARIF'
           out: 'reports'
+      - name: Upload Test Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          name: Depcheck report
+          path: ${{github.workspace}}/reports
+
 
       - name: Upload Test results
         uses: actions/upload-artifact@master
@@ -88,14 +94,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-          category: 'code'
-
-      - name: Upload Test Results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          name: Depcheck report
-          path: ${{github.workspace}}/reports
-                   
+          category: 'code'                   
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
