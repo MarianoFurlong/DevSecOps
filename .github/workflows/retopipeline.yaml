@@ -27,6 +27,7 @@ jobs:
         run: ./mvnw clean install
       - name: "Verificar paquete"
         run: ls -ltra target
+        
       - name: Test with Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
