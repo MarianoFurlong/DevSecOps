@@ -39,15 +39,13 @@ jobs:
           path: '.'
           format: 'HTML'
           out: 'reports'
-          args: >
-            --failOnCVSS 7
-            --enableRetired
-      - name: Upload Test results
-        uses: actions/upload-artifact@master
-        with:
-          name: Depcheck report
-          path: ${{github.workspace}}/reports
 
+      - name: Upload Test results
+        uses: github/codeql-action/upload-sarif@master
+        with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
+           
       - name: "Verificar reporte"
         run: ls -ltra reports
  
