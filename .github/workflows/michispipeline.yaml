@@ -70,5 +70,5 @@ jobs:
  
       - name: "Crear Contenedor"
         run: |
-          docker container stop webgoat
-          docker container rm webgoat
+          docker container stop WebGoat
+          docker container rm WebGoat
