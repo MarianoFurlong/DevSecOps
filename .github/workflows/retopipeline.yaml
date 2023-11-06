@@ -1,4 +1,4 @@
-name: GOAT Compile
+name: Ret0
 on:
   push:
     branches:

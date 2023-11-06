@@ -1,4 +1,4 @@
-name: GOAT Compile
+name: Michis
  
 on:
   push:
@@ -67,7 +67,23 @@ jobs:
           cd arachni-1.5.1-0.5.12/
           var_IP=$(docker inspect WebGoat | grep "IPAddress" | tail -1 | cut -d '"' -f 4)
           ./bin/arachni https://$var_IP:8080/WebGoat/login --output-verbose 1 --report-save-path=arachni-report.afr
-          
+      - name: Run static analysis
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          security-checks: 'vuln,secret,config'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'code'
+              
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
