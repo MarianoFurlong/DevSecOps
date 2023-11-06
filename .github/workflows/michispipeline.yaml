@@ -37,7 +37,7 @@ jobs:
         with:
           project: 'WebGoat'
           path: '.'
-          format: 'SARIF'
+          format: 'sarif'
           out: 'reports'
 
       - name: Upload Test results
@@ -79,7 +79,7 @@ jobs:
           scan-type: 'fs'
           security-checks: 'vuln,secret,config'
           ignore-unfixed: true
-          format: 'SARIF'
+          format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL'
 
