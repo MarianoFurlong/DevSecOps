@@ -49,6 +49,8 @@ jobs:
           terraform apply tfplan >> result_tfplan.txt
           ip_webgoat=$(cat result_tfplan.txt | grep "My_ip = "| awk '{ print $3 }' | sed 's/*//g')
           sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario
+          terraform show -json tfplan | jq > tfplan.json
+          checkov -f tfplan.json
 
       - name: "Ansible"
         env:
