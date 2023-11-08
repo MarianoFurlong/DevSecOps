@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
- 
+
 jobs:
   integration:
     runs-on: ubuntu-latest
@@ -99,7 +99,7 @@ jobs:
        
       - name: Reportes
         env:
-          secret: ${{ secrets.TOKEN }}
+          secret: ${{ secrets.TOKEN }} 
         run: |
           python3 trivy_report.py -f ./trivy-results.json -t "Trivy Scan"
           python3 trivy_report.py -f ${{github.workspace}}/reports/dependency-check-report.xml -t "Dependency Check Scan"

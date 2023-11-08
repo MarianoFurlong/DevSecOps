@@ -35,3 +35,4 @@ if __name__ == '__main__':
     parser.add_argument('--type-scan', '-t', dest='type_scan', help='Nombre del escaner', required=True)
     args = parser.parse_args()
     upload(args.file, args.type_scan)
+    #a
