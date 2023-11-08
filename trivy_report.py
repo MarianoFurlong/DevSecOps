@@ -1,9 +1,10 @@
 import json
 import requests
 import argparse
+import os
  
 url_api = "http://18.218.244.166:8080/api/v2/{method}"
-api_key = '${{ secret }}'
+api_key = os.environ["secret"]
 
 def upload(file_report, type_scan):
     headers = {
@@ -30,7 +31,6 @@ def upload(file_report, type_scan):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser._add_action()
     parser.add_argument('--file', '-f',dest='file', help='Nombre del reporte', required=True)
     parser.add_argument('--type-scan', '-t', dest='type_scan', help='Nombre del escaner', required=True)
     args = parser.parse_args()
