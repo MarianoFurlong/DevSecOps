@@ -37,7 +37,7 @@ jobs:
         with:
           project: 'WebGoat'
           path: '.'
-          format: 'JSON'
+          format: 'XML'
           out: 'reports'
       - name: Upload Test Results
         uses: github/codeql-action/upload-sarif@v2
@@ -92,7 +92,6 @@ jobs:
         run: |
           python3 trivy_report.py -f trivy-results.json -t "Trivy Scan"
           python3 trivy_report.py -f results.json -t "Depcheck Scan"
-
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
