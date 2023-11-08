@@ -96,10 +96,10 @@ jobs:
           format: 'json'
           output: 'trivy-results.json'
           severity: 'CRITICAL'
-      - name: Sesión reportes
+       
+      - name: Reportes
         env:
           secret: ${{ secrets.TOKEN }}
-      - name: Reportes
         run: |
           python3 trivy_report.py -f ./trivy-results.json -t "Trivy Scan"
           python3 trivy_report.py -f ${{github.workspace}}/reports/dependency-check-report.xml -t "Dependency Check Scan"
