@@ -39,11 +39,11 @@ jobs:
           path: '.'
           format: 'XML'
           out: 'reports'
-      - name: Upload Test Results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{github.workspace}}/reports
-          checkout_path: ${{github.workspace}}/reports
+#      - name: Upload Test Results
+#        uses: github/codeql-action/upload-sarif@v2
+#        with:
+#          sarif_file: ${{github.workspace}}/reports
+#          checkout_path: ${{github.workspace}}/reports
 
 
 #      - name: Upload Test results
