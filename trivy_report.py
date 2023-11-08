@@ -3,12 +3,12 @@ import requests
 import argparse
  
 url_api = "http://18.218.244.166:8080/api/v2/{method}"
-#api_key = "Token edaf1740e048924e2f817fb6436a803b690c6900"
+api_key = '${{ secret }}'
 
 def upload(file_report, type_scan):
     headers = {
         'accept': 'application/json',
-        #'Authorization': api_key
+        'Authorization': api_key
 
     }
     report = {
@@ -30,6 +30,7 @@ def upload(file_report, type_scan):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser._add_action()
     parser.add_argument('--file', '-f',dest='file', help='Nombre del reporte', required=True)
     parser.add_argument('--type-scan', '-t', dest='type_scan', help='Nombre del escaner', required=True)
     args = parser.parse_args()
