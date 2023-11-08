@@ -46,14 +46,14 @@ jobs:
           checkout_path: ${{github.workspace}}/reports
 
 
-      - name: Upload Test results
-        uses: actions/upload-artifact@master
-        with:
-          name: Depcheck report
-          path: ${{github.workspace}}/reports
+#      - name: Upload Test results
+#        uses: actions/upload-artifact@master
+#        with:
+#          name: Depcheck report
+#          path: ${{github.workspace}}/reports
            
-      - name: "Verificar reporte"
-        run: ls -ltra reports
+#      - name: "Verificar reporte"
+#        run: ls -ltra reports
  
       - name: "Construyendo imagen"
         run: |
